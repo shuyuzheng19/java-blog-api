@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsy.mapper.FileMapper">
+    <cache/>
+    <insert id="saveFileInfo" parameterType="com.zsy.model.pojo.FileInfo">
+        insert into files(user_id, old_name, new_name, create_at, size, suffix, absolute_path, is_public, md5)
+        values (#{userId},#{oldName},#{newName},#{date},#{size},#{suffix},#{absolutePath},#{isPublic},#{fileMd5Id})
+    </insert>
+    <insert id="saveFileMd5" parameterType="com.zsy.model.pojo.FileMd5">
+        insert into file_md5(md5, url) values (#{md5},#{url})
+    </insert>
+
+    <select id="findMd5" resultType="java.lang.String">
+        SELECT url from file_md5 where md5=#{md5} limit 1
+    </select>
+
+    <select id="getFileInfos" resultType="com.zsy.model.vo.FileVo">
+        select id, user_id, old_name, new_name, create_at, size, suffix,m.url as url,m.md5 as md5 from files f join file_md5 m on f.md5 = m.md5
+        <where>
+            <choose>
+                <when test="uid==-1">
+                    AND is_public = true
+                </when>
+                <otherwise>
+                    AND user_id = #{uid}
+                </otherwise>
+            </choose>
+            <if test="keyword != null and keyword != ''">
+                AND old_name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+        order by ${sort} desc
+    </select>
+</mapper>

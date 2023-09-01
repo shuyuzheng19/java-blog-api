@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsy.mapper.UserMapper">
+    <cache/>
+    <resultMap id="userMap" type="com.zsy.model.pojo.User">
+        <id column="id" property="id"/>
+        <association property="role" javaType="com.zsy.model.pojo.Role" column="role_id" select="com.zsy.mapper.SimpleQueryMapper.findByRoleId"/>
+    </resultMap>
+    <insert id="saveUser">
+        insert into users(id, username, nick_name, password, email, icon, create_at, update_at, role_id)
+        values (#{id},#{username},#{nickName},#{password},#{email},#{icon},#{createAt},#{updateAt},#{roleId})
+    </insert>
+    <select id="findById" resultMap="userMap">
+         select id,username,nick_name,role_id,password,email,icon from users where deleted_at is null and id = #{id}
+    </select>
+    <select id="findByUsername" resultMap="userMap">
+        select id,username,nick_name,role_id,password,email,icon from users where deleted_at is null and username = #{username}
+    </select>
+    <select id="existsUsername" resultType="java.lang.Boolean">
+        select count(id) from users where username=#{username}
+    </select>
+</mapper>

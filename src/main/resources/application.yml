@@ -1,0 +1,53 @@
+server:
+  port: 9898
+  host: ip地址
+spring:
+  datasource:
+    username: zsy
+    password: xiaoyu2528959216
+    url: jdbc:postgresql://${server.host}:5432/my_blog?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    driver-class-name: org.postgresql.Driver
+  mail:
+    password: ONXVXWJZQYQNOKBH
+    username: shuyuzheng19@163.com
+    default-encoding: UTF-8
+    host: smtp.163.com
+  redis:
+    host: ${server.host}
+    port: 6379
+    password: xiaoyu2528959216
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
+mybatis:
+  mapper-locations: classpath:/mappers/**
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: true
+pagehelper:
+  helper-dialect: postgresql
+  params: count=countSql
+  reasonable: true
+  support-methods-arguments: true
+  auto-dialect: true
+meilisearch:
+  apiHost: http://141.164.45.104:7700
+  apiKey: zhengshuyuzuishuaile8889966
+init:
+  search: false
+  random: false
+gpt:
+  model: text-davinci-002-render-sha-mobile
+  token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1UaEVOVUpHTkVNMVFURTRNMEZCTWpkQ05UZzVNRFUxUlRVd1FVSkRNRU13UmtGRVFrRXpSZyJ9.eyJodHRwczovL2FwaS5vcGVuYWkuY29tL3Byb2ZpbGUiOnsiZW1haWwiOiJzaHV5dXpoZW5nMTlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWV9LCJodHRwczovL2FwaS5vcGVuYWkuY29tL2F1dGgiOnsidXNlcl9pZCI6InVzZXItVjZUTWZ6TmsyWXBmcGJ1QWdOZ1dpblBDIn0sImlzcyI6Imh0dHBzOi8vYXV0aDAub3BlbmFpLmNvbS8iLCJzdWIiOiJhdXRoMHw2NDMzZDJkMjE2NmZlZDgzNWMxYmZjYjQiLCJhdWQiOlsiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MSIsImh0dHBzOi8vb3BlbmFpLm9wZW5haS5hdXRoMGFwcC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjkyODQ5NzU0LCJleHAiOjE2OTQwNTkzNTQsImF6cCI6IlRkSkljYmUxNldvVEh0Tjk1bnl5d2g1RTR5T282SXRHIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCBtb2RlbC5yZWFkIG1vZGVsLnJlcXVlc3Qgb3JnYW5pemF0aW9uLnJlYWQgb3JnYW5pemF0aW9uLndyaXRlIG9mZmxpbmVfYWNjZXNzIn0.xhzoheQ5JmNv0cWExdKXAVKFSKSTxzmQtEqXK0QHussXbFipZJ-GXfjxejA_We3PbbVC3HMZE_QQTYuqP9odz7ITaN2nzvU2xPBqG_s55CiD6f2B1giPek7vKlE1p1-ufcntkqzIbTBF-uPWD7Pt6kMMpf72OmfWfPEUFF3D_nKMC98Yymi3jVGKPhpznVXJYkrZEh_xVul5kBeupD8Vjnw3epxtXgRws_MT7n47XRi9wCu3AfD_e3ORCfLB83n9sG3kRPH1kJKYdzKdora6rUpvmxMNo-7ErLHDuqHTwvyCfMSW93AZgIrSlAKdlUMMnV2P1m20lLSRLFQmjE0JzA
+upload:
+#  5MB
+  maxImageSize: 5242880
+#  300MB
+  maxFileSize: 314572800
+  prefix: static/
+  uri: https://www.sqeyjh.com/static/
+  path: J:/blog/static
+logging:
+  config: classpath:logback-async.xml

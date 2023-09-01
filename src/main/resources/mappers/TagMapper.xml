@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zsy.mapper.TagMapper">
+    <cache/>
+
+    <insert id="addTag" parameterType="com.zsy.model.pojo.Tag" keyProperty="id" useGeneratedKeys="true">
+        insert into tags(name, create_at, update_at)
+        values (#{name},#{createAt},#{updateAt})
+    </insert>
+
+    <select id="findAllTag" resultType="com.zsy.model.vo.TagVo">
+        select id,name from tags where deleted_at is null order by create_at desc
+    </select>
+    <select id="findById" resultType="com.zsy.model.vo.TagVo">
+        select id,name from tags where deleted_at is null and id = #{tid}
+    </select>
+    <select id="findBlogByTagId" resultMap="com.zsy.mapper.BlogMapper.blogResultMap">
+        select b.id,b.title,b.description,b.cover_image,b.create_at,b.user_id,b.category_id
+        FROM blogs b
+                 JOIN blogs_tags bt ON b.id = bt.blog_id
+                 JOIN tags t ON bt.tag_id = t.id
+        WHERE t.id=#{tid} and b.deleted_at is null and b.category_id is not null
+    </select>
+
+    <select id="listTag" parameterType="com.zsy.model.request.CategoryFilterRequest" resultType="com.zsy.model.vo.AdminOtherVo" flushCache="true">
+        SELECT id,name,create_at,update_at
+        FROM tags
+        <where>
+            <if test="request.startDate !=null and request.endDate !=null">
+                AND create_at BETWEEN #{request.startDate} AND #{request.endDate}
+            </if>
+            <if test="request.keyword != null and request.keyword != ''">
+                AND name LIKE CONCAT('%', #{request.keyword}, '%')
+            </if>
+            <choose>
+                <when test="request.deleted">
+                    AND deleted_at is not null
+                </when>
+                <otherwise>
+                    AND deleted_at is null
+                </otherwise>
+            </choose>
+        </where>
+        order by ${request.sort.value}
+    </select>
+
+    <update id="updateTag" parameterType="com.zsy.model.vo.CategoryVo">
+        update tags set name = #{name},update_at = CURRENT_TIMESTAMP where id  = #{id}
+    </update>
+
+    <update id="deleteTag">
+        update tags set deleted_at=
+        <choose>
+            <when test="deleted">
+                CURRENT_TIMESTAMP
+            </when>
+            <otherwise>
+                null
+            </otherwise>
+        </choose>
+        where id = #{cid}
+    </update>
+
+    <update id="deleteTags">
+        update tags set deleted_at=
+        <choose>
+            <when test="deleted">
+                CURRENT_TIMESTAMP
+            </when>
+            <otherwise>
+                null
+            </otherwise>
+        </choose>
+        <where>
+            AND id in
+            <foreach item="item" collection="cids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+</mapper>
