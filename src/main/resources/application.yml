@@ -8,8 +8,8 @@ spring:
     url: jdbc:postgresql://${server.host}:5432/my_blog?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
     driver-class-name: org.postgresql.Driver
   mail:
-    password: ONXVXWJZQYQNOKBH
-    username: shuyuzheng19@163.com
+    password: 
+    username: @163.com
     default-encoding: UTF-8
     host: smtp.163.com
   redis:
