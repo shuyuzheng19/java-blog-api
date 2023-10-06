@@ -3,8 +3,8 @@ server:
   host: ip地址
 spring:
   datasource:
-    username: zsy
-    password: xiaoyu2528959216
+    username: username
+    password: password
     url: jdbc:postgresql://${server.host}:5432/my_blog?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
     driver-class-name: org.postgresql.Driver
   mail:
@@ -15,7 +15,7 @@ spring:
   redis:
     host: ${server.host}
     port: 6379
-    password: xiaoyu2528959216
+    password: password
   servlet:
     multipart:
       max-file-size: 300MB
@@ -47,7 +47,7 @@ upload:
 #  300MB
   maxFileSize: 314572800
   prefix: static/
-  uri: https://www.sqeyjh.com/static/
+  uri: https://www.shuyuz.com/static/
   path: J:/blog/static
 logging:
   config: classpath:logback-async.xml
