@@ -33,7 +33,7 @@ pagehelper:
   support-methods-arguments: true
   auto-dialect: true
 meilisearch:
-  apiHost: http://141.164.45.104:7700
+  apiHost: http://hostname:7700
   apiKey: apiKey
 init:
   search: false
