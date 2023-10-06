@@ -34,7 +34,7 @@ pagehelper:
   auto-dialect: true
 meilisearch:
   apiHost: http://141.164.45.104:7700
-  apiKey: zhengshuyuzuishuaile8889966
+  apiKey: apiKey
 init:
   search: false
   random: false
